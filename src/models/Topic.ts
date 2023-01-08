@@ -1,18 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const categorySchema = new mongoose.Schema(
+const topicSchema = new mongoose.Schema(
   {
-    category: {
-      type: mongoose.Types.ObjectId,
-      ref: 'Category',
-    },
-    concepts: {
-      type: [mongoose.Types.ObjectId],
-      ref: 'Concept',
+    name: {
+      type: String,
+      require: true,
     },
     user: {
       type: mongoose.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
   },
   {
@@ -20,6 +16,6 @@ const categorySchema = new mongoose.Schema(
   }
 );
 
-const Topic = mongoose.model('Category', categorySchema);
+const Topic = mongoose.model("Topic", topicSchema);
 
 export default Topic;

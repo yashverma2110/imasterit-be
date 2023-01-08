@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const conceptSchema = new mongoose.Schema(
   {
@@ -18,13 +18,13 @@ const conceptSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    category: {
+    topic: {
       type: mongoose.Types.ObjectId,
-      ref: 'Category',
+      ref: "Topic",
     },
     createdBy: {
       type: mongoose.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
   },
   {
@@ -32,6 +32,6 @@ const conceptSchema = new mongoose.Schema(
   }
 );
 
-const Concept = mongoose.model('Concept', conceptSchema);
+const Concept = mongoose.model("Concept", conceptSchema);
 
 export default Concept;

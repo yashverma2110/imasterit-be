@@ -1,5 +1,5 @@
-import { RequestHandler } from 'express';
-import CONCEPTS from '../utils/constants';
+import { RequestHandler } from "express";
+import CONCEPTS from "../utils/constants";
 
 const getARandomConcept: RequestHandler = async (req, res) => {
   try {
@@ -9,6 +9,7 @@ const getARandomConcept: RequestHandler = async (req, res) => {
       data: CONCEPTS[randomConceptIndex],
     });
   } catch (error: any) {
+    console.log("--->", error);
     res.status(500).json({
       success: false,
       error,

@@ -1,8 +1,8 @@
-import express from 'express';
-import { getARandomConcept } from '../controllers/concept';
+import express from "express";
+import { getARandomConcept } from "../controllers/concept";
 
 const router = express.Router();
 
-router.get('/random', getARandomConcept);
+router.get("/random", getARandomConcept);
 
 export default router;
