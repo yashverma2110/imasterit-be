@@ -7,4 +7,10 @@ const generateAuthToken = (email: string, id: string) => {
   return token;
 };
 
-export { generateAuthToken };
+const decodeAuthToken = (token: string) => {
+  const decoded = jwt.verify(token, ENDPOINTS.JWT_ACCESS_TOKEN);
+
+  return decoded;
+};
+
+export { generateAuthToken, decodeAuthToken };
