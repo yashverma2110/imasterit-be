@@ -2,30 +2,21 @@ import mongoose from 'mongoose';
 
 const historySchema = new mongoose.Schema(
   {
-    name: {
+    jobId: {
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
-    public: {
-      type: Boolean,
-      default: false,
-    },
-    user: {
+    conceptId: {
       type: mongoose.Types.ObjectId,
+      ref: 'Concept',
+    },
+    remindAt: {
+      type: Date,
       required: true,
+    },
+    userId: {
+      type: mongoose.Types.ObjectId,
       ref: 'User',
-    },
-    likes: {
-      type: Number,
-      default: 0,
-    },
-    urls: {
-      type: [String],
-      default: [],
     },
   },
   {
