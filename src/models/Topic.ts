@@ -6,9 +6,14 @@ const topicSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    shortName: {
+      type: String,
+      require: true,
+      unique: true,
+    },
     user: {
       type: mongoose.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
   },
   {
