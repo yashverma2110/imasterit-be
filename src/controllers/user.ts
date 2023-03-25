@@ -1,6 +1,8 @@
 import { RequestHandler } from "express";
 import User from "../models/User";
-import { generateAuthToken } from "../utils/auth";
+import Topic from '../models/Topic';
+import UserTopics from '../models/UserTopic';
+import { generateAuthToken } from '../utils/auth';
 
 const getUser: RequestHandler = async (req, res) => {
   try {
@@ -70,7 +72,7 @@ const logIn: RequestHandler = async (req, res) => {
       return res.status(404).json({
         success: false,
         error: {
-          msg: "USER_NOT_FOUND",
+          msg: 'USER_NOT_FOUND',
         },
       });
     }
@@ -93,4 +95,63 @@ const logIn: RequestHandler = async (req, res) => {
   }
 };
 
-export { getUser, signUp, logIn };
+const subscribeToTopic: RequestHandler = async (req, res) => {
+  try {
+    const { topic: topicShortName } = req.body;
+
+    const topic: any = await Topic.find(
+      { shortName: topicShortName },
+      { _id: 1 }
+    );
+    console.log(
+      '🚀 ~ file: user.ts:106 ~ constsubscribeToTopic:RequestHandler= ~ topic:',
+      topic
+    );
+
+    if (!topic.length) {
+      throw new Error('TOPIC_NOT_FOUND');
+    }
+
+    const userTopic = new UserTopics({
+      topicId: topic._id,
+      userId: req.user._id,
+    });
+
+    await userTopic.save();
+
+    res.status(201).json({
+      success: true,
+    });
+  } catch (e: any) {
+    console.log(
+      '🚀 ~ file: user.ts:112 ~ constsubscribeToTopic:RequestHandler= ~ e:',
+      e
+    );
+    if (e.message === 'TOPIC_NOT_FOUND') {
+      return res.status(404).json({
+        success: false,
+        error: {
+          msg: 'TOPIC_NOT_FOUND',
+        },
+      });
+    }
+
+    if (e.code === 11000) {
+      return res.status(409).json({
+        success: false,
+        error: {
+          msg: 'ALREADY_SUBSCRIBED',
+        },
+      });
+    }
+
+    res.status(500).send({
+      success: false,
+      error: {
+        msg: e,
+      },
+    });
+  }
+};
+
+export { getUser, signUp, logIn, subscribeToTopic };
