@@ -12,19 +12,19 @@ const conceptSchema = new mongoose.Schema(
     },
     public: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     difficulty: {
       type: Number,
       default: 0,
     },
-    topic: {
+    topicId: {
       type: mongoose.Types.ObjectId,
-      ref: "Topic",
+      ref: 'Topic',
     },
     createdBy: {
       type: mongoose.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
   },
   {
