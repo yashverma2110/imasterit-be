@@ -1,8 +1,8 @@
 import mongoose, { ConnectOptions } from "mongoose";
-import ENDPOINTS from "../utils/config";
+import endpoints from '../utils/config';
 
 mongoose.connect(
-  `mongodb+srv://${ENDPOINTS.DB_USERNAME}:${ENDPOINTS.DB_PASSWORD}@imaster.yqs5d3h.mongodb.net/?retryWrites=true&w=majority`,
+  `${endpoints.MONGODB_URI}@${endpoints.DB_NAME}.r6zcuah.mongodb.net/?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -11,6 +11,8 @@ mongoose.connect(
 );
 
 const db = mongoose.connection;
+
+mongoose.set('strictQuery', false);
 
 db.on("connected", () =>
   console.log("Mongoose default connection established")
