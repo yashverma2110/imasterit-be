@@ -1,18 +1,20 @@
-import { RequestHandler } from "express";
+import mongoose from 'mongoose';
+import { RequestHandler } from 'express';
 import Concept from '../models/Concept';
 
 const getARandomConcept: RequestHandler = async (req, res) => {
   try {
-    const randomConcept = await Concept.aggregate([{ $sample: { size: 1 } }]);
+    const topicId = new mongoose.Types.ObjectId(req.params.topicId);
+
+    const randomConcept = await Concept.aggregate([
+      { $match: { topicId } },
+      { $sample: { size: 1 } },
+    ]);
 
     res.status(200).json({
       concept: randomConcept,
     });
   } catch (error: any) {
-    console.log(
-      '🚀 ~ file: concept.ts:12 ~ constgetARandomConcept:RequestHandler= ~ error:',
-      error
-    );
     res.status(500).json({
       success: false,
       error,

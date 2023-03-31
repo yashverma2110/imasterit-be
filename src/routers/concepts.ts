@@ -3,7 +3,7 @@ import { getARandomConcept, createConcept } from '../controllers/concept';
 
 const router = express.Router();
 
-router.get('/random', getARandomConcept);
+router.get('/random/:topicId', getARandomConcept);
 router.post('/create', createConcept);
 
 export default router;
