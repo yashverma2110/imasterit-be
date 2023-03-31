@@ -11,7 +11,7 @@ const historySchema = new mongoose.Schema(
       ref: 'Concept',
     },
     remindAt: {
-      type: Date,
+      type: String,
       required: true,
     },
     userId: {
