@@ -6,12 +6,22 @@ import { decodeAuthToken } from '../utils/auth';
 async function checkAuth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    const token = authHeader.slice(7);
+  try {
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.slice(7);
 
-    const decoded: any = decodeAuthToken(token);
-    const user = await User.find({ _id: decoded.id });
-    req.user = user;
+      if (!token) {
+        throw Error('Unauthorized');
+      }
+
+      const decoded: any = decodeAuthToken(token);
+      const user = await User.find({ _id: decoded.id });
+      req.user = user;
+    } else {
+      throw Error('Unauthorized');
+    }
+  } catch (error) {
+    return res.status(401).send(error);
   }
 
   next();

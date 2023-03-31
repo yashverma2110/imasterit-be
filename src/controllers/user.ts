@@ -103,24 +103,26 @@ const subscribeToTopic: RequestHandler = async (req, res) => {
       { shortName: topicShortName },
       { _id: 1 }
     );
-    console.log(
-      '🚀 ~ file: user.ts:106 ~ constsubscribeToTopic:RequestHandler= ~ topic:',
-      topic
-    );
 
     if (!topic.length) {
       throw new Error('TOPIC_NOT_FOUND');
     }
 
+    const remindAt = '5:00 PM';
     const userTopic = new UserTopics({
-      topicId: topic._id,
+      topicId: topic[0]._id,
       userId: req.user._id,
+      remindAt,
     });
 
     await userTopic.save();
 
     res.status(201).json({
       success: true,
+      subscription: {
+        topicId: topic[0]._id,
+        remindAt,
+      },
     });
   } catch (e: any) {
     console.log(
